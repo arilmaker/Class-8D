@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kelas 8D Keren!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ====================================
+           CSS STYLING (DI DALAM HTML)
+           ==================================== */
+
+        /* 1. VARIABEL WARNA (Light Mode Default) */
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --header-bg: #2c3e50;
+            --header-text: white;
+            --primary-color: #3498db;
+            --secondary-bg: #ecf0f1;
+            --card-bg: white;
+            --danger-color: #e74c3c;
+            --success-color: #27ae60;
+            --border-color: #ddd;
+        }
+
+        /* 2. DARK MODE STYLES */
+        body.dark-mode {
+            --bg-color: #1c1c1c;
+            --text-color: #ecf0f1;
+            --header-bg: #111;
+            --header-text: #f0f0f0;
+            --primary-color: #9b59b6; 
+            --secondary-bg: #252525;
+            --card-bg: #333;
+            --danger-color: #f1c40f; 
+            --success-color: #2ecc71;
+            --border-color: #444;
+        }
+
+        /* Pengaturan Dasar */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border-color);
+            margin: 40px 0;
+        }
+
+        /* Navbar/Header */
+        .navbar {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: var(--header-text);
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar li {
+            margin-left: 20px;
+        }
+
+        .navbar a {
+            color: var(--header-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: var(--primary-color); 
+        }
+
+        /* Mode Toggle Button */
+        .mode-toggle {
+            cursor: pointer;
+            font-size: 1.5em;
+            color: var(--header-text);
+            margin-left: 20px;
+            transition: color 0.3s;
+        }
+
+        .mode-toggle:hover {
+            color: var(--primary-color);
+        }
+
+
+        /* Bagian Umum */
+        section {
+            padding: 40px 0;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        /* Dashboard Utama (Hero Section) */
+        .hero-section {
+            background-color: var(--secondary-bg); 
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .photo-bareng img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Data Grid (Struktur Organisasi) */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .data-item {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .data-item h4 {
+            color: var(--danger-color);
+            margin-top: 0;
+        }
+
+        .data-item p {
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        /* Jadwal Pelajaran */
+        .jadwal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .jadwal-table th {
+            background-color: var(--primary-color);
+            color: var(--header-text);
+        }
+        
+        .jadwal-table td {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .jadwal-table tr:nth-child(even) {
+            background-color: var(--secondary-bg);
+        }
+
+        /* SUPPORT SECTION */
+        .support-section {
+            background-color: var(--secondary-bg); 
+            border: 1px solid var(--border-color);
+        }
+
+        .support-tagline {
+            color: var(--success-color); 
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .support-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .icon-support {
+            font-size: 3em;
+            color: var(--success-color); 
+            margin-bottom: 15px;
+        }
+
+        /* GALERI FOTO (REVISI) */
+        .galeri-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .galeri-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .galeri-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .galeri-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(44, 62, 80, 0.8);
+            color: var(--header-text);
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+        
+        /* ====================================================
+           RESPONSIVE DESIGN (Perbaikan Tampilan Mobile/Kecil)
+           ==================================================== */
+        @media (max-width: 768px) {
+            
+            /* NAVIGASI (agar tidak terpotong) */
+            .navbar .container {
+                flex-direction: column; 
+                align-items: flex-start; 
+                padding-bottom: 10px;
+            }
+
+            .navbar nav {
+                margin-top: 10px;
+                width: 100%; 
+            }
+
+            .navbar ul {
+                flex-wrap: wrap;
+                justify-content: space-around; 
+                width: 100%;
+            }
+
+            .navbar li {
+                margin: 5px 5px; 
+                font-size: 0.9em;
+            }
+
+            /* Tombol Mode Toggle pindah ke pojok kanan atas */
+            .mode-toggle {
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                margin: 0;
+            }
+
+            /* TABEL (agar tidak terpotong, membuatnya scrollable) */
+            #jadwal {
+                overflow-x: auto; 
+            }
+            .jadwal-table {
+                display: block;
+                width: 700px; /* Atur lebar minimum agar tabel muat */
+                font-size: 0.8em; 
+            }
+            .jadwal-table th, .jadwal-table td {
+                padding: 10px 5px;
+            }
+
+            /* FOTO UTAMA DAN GALERI */
+            .photo-bareng img {
+                max-width: 100%;
+            }
+            .galeri-grid {
+                grid-template-columns: 1fr; /* Tumpuk semua foto galeri */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <h1>Kelas 8D 🚀</h1>
+            <nav>
+                <ul>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#struktur">Struktur</a></li>
+                    <li><a href="#jadwal">Jadwal</a></li>
+                    <li><a href="#support">Support</a></li>
+                    <li><a href="#galeri">Galeri</a></li>
+                </ul>
+            </nav>
+            <div id="mode-toggle" class="mode-toggle">
+                <i class="fas fa-moon"></i> 
+            </div>
+            </div>
+    </header>
+
+    <main class="container">
+        <section id="dashboard" class="hero-section">
+            <div class="hero-content">
+                <h2>Selamat Datang di Dunia Kelas 8D!</h2>
+                <p>Bersama Meraih Cita dan Canda Tawa di Sekolah Kita.</p>
+            </div>
+            <div class="photo-bareng">
+                <img src="https://j.top4top.io/p_3620dvovc1.jpg" alt="Foto Gedung Sekolah">
+            </div>
+        </section>
+        
+        <hr>
+        
+        <section id="struktur" class="data-section">
+            <h3>📝 Data & Struktur Organisasi Kelas</h3>
+            
+            <div class="data-grid">
+                <div class="data-item">
+                    <h4>Wali Kelas</h4>
+                    <p>Jajang Jaenudin</p>
+                </div>
+                <div class="data-item">
+                    <h4>Ketua Kelas</h4>
+                    <p>Cucun Widia Ningsih</p>
+                </div>
+                <div class="data-item">
+                    <h4>Wakil Ketua Kelas</h4>
+                    <p>Agiestna Rijaldi Junaedi</p>
+                </div>
+                <div class="data-item">
+                    <h4>Sekretaris 1</h4>
+                    <p>Muhammad Ibnu Malik</p>
+                </div>
+                <div class="data-item">
+                    <h4>Sekretaris 2</h4>
+                    <p>Siti Khodijah</p>
+                </div>
+                <div class="data-item">
+                    <h4>Bendahara 1</h4>
+                    <p>Nurhidayat</p>
+                </div>
+                <div class="data-item">
+                    <h4>Bendahara 2</h4>
+                    <p>Siti Hanipah</p>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="jadwal" class="data-section">
+            <h3>🗓️ Jadwal Pelajaran Kelas 8D (Pulang 12:30)</h3>
+            <div style="overflow-x: auto;"> 
+                <table class="jadwal-table">
+                    <thead>
+                        <tr>
+                            <th>Hari</th>
+                            <th>07:30 - 09:00</th>
+                            <th>09:00 - 10:30</th>
+                            <th>10:30 - 11:00</th>
+                            <th>11:00 - 12:30</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Senin</td>
+                            <td>B. Arab / B. Lampung</td>
+                            <td>IPS</td>
+                            <td>**Istirahat**</td>
+                            <td>Aqidah A</td>
+                        </tr>
+                        <tr>
+                            <td>Selasa</td>
+                            <td>B. Indonesia</td>
+                            <td>MTK</td>
+                            <td>**Istirahat**</td>
+                            <td>Sanbus / Bhs.</td>
+                        </tr>
+                        <tr>
+                            <td>Rabu</td>
+                            <td>Fiqih</td>
+                            <td>MTK</td>
+                            <td>**Istirahat**</td>
+                            <td>Informatika</td>
+                        </tr>
+                        <tr>
+                            <td>Kamis</td>
+                            <td>B. Sunda</td>
+                            <td>B. Indonesia</td>
+                            <td>**Istirahat**</td>
+                            <td>Qurdis / BTA</td>
+                        </tr>
+                        <tr>
+                            <td>Jumat</td>
+                            <td>B. Inggris</td>
+                            <td>PKN</td>
+                            <td>**Istirahat**</td>
+                            <td>PKN</td>
+                        </tr>
+                        <tr>
+                            <td>Sabtu</td>
+                            <td>PJOK</td>
+                            <td>IPA</td>
+                            <td>**Istirahat**</td>
+                            <td>IPA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="support" class="data-section support-section">
+            <h3>❤️ Support & Semangat Untuk Kita!</h3>
+            <p class="support-tagline">Ingatlah selalu untuk saling membantu dan menjaga kekompakan.</p>
+            
+            <div class="support-grid">
+                <div class="support-card">
+                    <i class="fas fa-handshake icon-support"></i>
+                    <h4>Kompak</h4>
+                    <p>Saling dukung dalam kesulitan, saling dorong dalam kebaikan.</p>
+                </div>
+                <div class="support-card">
+                    <i class="fas fa-lightbulb icon-support"></i>
+                    <h4>Inovasi</h4>
+                    <p>Jangan takut mencoba hal baru dan berprestasi.</p>
+                </div>
+                <div class="support-card">
+                    <i class="fas fa-book-open icon-support"></i>
+                    <h4>Belajar</h4>
+                    <p>Tugas utama kita, serius tapi tetap santai.</p>
+                </div>
+                <div class="support-card">
+                    <i class="fas fa-clock icon-support"></i>
+                    <h4>Disiplin</h4>
+                    <p>Datang tepat waktu, kumpulkan tugas tepat waktu.</p>
+                </div>
+            </div>
+        </section>
+        
+        <hr>
+
+        <section id="galeri" class="data-section">
+            <h3>📸 Galeri Kenangan & Sekolah Kita</h3>
+            <div class="galeri-grid">
+                
+                <div class="galeri-card">
+                    <img src="https://d.top4top.io/p_36204x8e91.jpg" alt="Foto Kemenangan Organisasi">
+                    <div class="galeri-overlay">
+                        Juara Organisasi Sekolah! 🏆
+                    </div>
+                </div>
+
+                <div class="galeri-card">
+                    <img src="https://f.top4top.io/p_36200jboy1.jpg" alt="Our Class Memories 1">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://g.top4top.io/p_3620qouao1.jpg" alt="Our Class Memories 2">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://h.top4top.io/p_3620ktc8p1.jpg" alt="Our Class Memories 3">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://i.top4top.io/p_3620fvs0v1.jpg" alt="Our Class Memories 4">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://j.top4top.io/p_3620t4ywi1.jpg" alt="Our Class Memories 5">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://k.top4top.io/p_36200cw731.jpg" alt="Our Class Memories 6">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://a.top4top.io/p_36206j7ms1.jpg" alt="Our Class Memories 7">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://l.top4top.io/p_3620hizp11.jpg" alt="Our Class Memories 8">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://c.top4top.io/p_3620r34j01.jpg" alt="Our Class Memories 9">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://b.top4top.io/p_3620jwnd71.jpg" alt="Our Class Memories 10">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                <div class="galeri-card">
+                    <img src="https://d.top4top.io/p_36205cpnt1.jpg" alt="Our Class Memories 11">
+                    <div class="galeri-overlay">Our Class Memories 🎉</div>
+                </div>
+                
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Kelas 8D - Dibuat dengan Semangat.</p>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('mode-toggle');
+        const body = document.body;
+
+        // Cek mode yang tersimpan di local storage atau default ke light
+        const currentMode = localStorage.getItem('theme') || 'light';
+        
+        if (currentMode === 'dark') {
+            body.classList.add('dark-mode');
+            toggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            body.classList.remove('dark-mode');
+            toggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                // Pindah ke Dark Mode
+                localStorage.setItem('theme', 'dark');
+                toggleButton.innerHTML = '<i class="fas fa-sun"></i>'; // Ganti ikon ke Matahari
+            } else {
+                // Pindah ke Light Mode
+                localStorage.setItem('theme', 'light');
+                toggleButton.innerHTML = '<i class="fas fa-moon"></i>'; // Ganti ikon ke Bulan
+            }
+        });
+    </script>
+</body>
+</html>
